@@ -4,21 +4,28 @@ import random
 import time
 pygame.font.init( )
 
+# Screen Height and Width
 WIN_WIDTH = 500
 WIN_HEIGHT = 700
 
+# Images used
+# The Bird Image uses a list to loop through the animation
 BIRD_IMG = [pygame.transform.scale(pygame.image.load("bird1.png"), (50,40)), pygame.transform.scale(pygame.image.load("bird2.png"), (50,40)), pygame.transform.scale(pygame.image.load("bird3.png"), (50,40))]
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load("pipe.png"))
 BG_IMG = pygame.transform.scale((pygame.image.load("bg.png")), (WIN_WIDTH,WIN_HEIGHT))
 BASE_IMG = pygame.transform.scale2x(pygame.image.load("base.png"))
 
+# Font used for the color
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
+#Settings for the window properties
 icon = pygame.image.load("bird1.png")
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Flappy Bird")
 WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 
+# Creating Classes
+# Bird Class
 class Bird:
     IMGS=BIRD_IMG
     MAX_ROTATION = 25
@@ -26,11 +33,12 @@ class Bird:
     ANIMATION_TIME = 5 
 
     def __init__(self, x, y):
+        # X and Y positions of the bird
         self.x = x
         self.y = y
-        self.tilt = 0
-        self.tick_count = 0
-        self.vel =0
+        self.tilt = 0 # The rotation of the bird on the y-axis
+        self.tick_count = 0 # A clock count that aids with the animation and it's sync with the movement of the bird
+        self.vel = 0 
         self.height = self.y
         self.img_count = 0
         self.img = self.IMGS[0]
@@ -54,7 +62,7 @@ class Bird:
         if d < 0 or self.y < self.height + 50:
             if self.tilt < self.MAX_ROTATION:
                 self.tilt = self.MAX_ROTATION
-        else:  # tilt down
+        else:
             if self.tilt > -90:
                 self.tilt -= self.ROT_VEL
 
@@ -181,7 +189,7 @@ def main():
         rem= []
         for pipe in pipes:
             if pipe.collide(bird):
-                pass
+                score = 0
 
             if pipe.x + pipe.PIPE_TOP.get_width()<0:
                 rem.append(pipe)
